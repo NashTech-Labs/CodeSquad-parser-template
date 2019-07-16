@@ -18,6 +18,14 @@ x.toString                   Emits the XML literal as a String.
 x \\ "div" \ "@attribute"   When you need to extract tag attributes, place an @ character before the attribute name.
 ```
 
+#### The internal implementation of text and toString methods
+
+```
+  override def toString(): String = theSeq.mkString
+  def text: String = (this map (_.text)).mkString
+  def mkString: String = mkString("")
+```
+
 ### Example:
 ```
 scala> val document  = <languages>
@@ -32,8 +40,11 @@ scala> val document  = <languages>
 scala> (document \ "language")
 res0: scala.xml.NodeSeq = NodeSeq(<language>Scala</language>, <language>Java</language>, <language>C++</language>, <language>Kotlin</language>)
 
+scala> (document \ "language").text
+res1: String = ScalaJavaC++Kotlin
+
 scala> (document \ "language").map(_.text)
-res0: scala.collection.immutable.Seq[String] = List(Scala, Java, C++, Kotlin)
+res2: scala.collection.immutable.Seq[String] = List(Scala, Java, C++, Kotlin)
 ```
 
 ### If tag is missing then it will return an empty NodeSeq and List
@@ -44,13 +55,16 @@ document: scala.xml.Elem = <languages></languages>
 scala> (document \ "language")
 res1: scala.xml.NodeSeq = NodeSeq()
 
+scala> (document \ "language").text
+res2: String = ""
+
 scala> (document \ "language").map(_.text)
-res2: scala.collection.immutable.Seq[String] = List()
+res3: scala.collection.immutable.Seq[String] = List()
 
 ```
 
 
-### Get value from attribute
+### Get value from attribute and tag
 ```
 val weather =
 <rss>
