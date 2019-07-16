@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="scoverage" type="scoverageType"/>
+    <xs:complexType name="statementType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="package" use="optional"/>
+                <xs:attribute type="xs:string" name="class" use="optional"/>
+                <xs:attribute type="xs:string" name="class-type" use="optional"/>
+                <xs:attribute type="xs:string" name="full-class-name" use="optional"/>
+                <xs:attribute type="xs:string" name="top-level-class" use="optional"/>
+                <xs:attribute type="xs:string" name="source" use="optional"/>
+                <xs:attribute type="xs:string" name="method" use="optional"/>
+                <xs:attribute type="xs:string" name="start" use="optional"/>
+                <xs:attribute type="xs:string" name="end" use="optional"/>
+                <xs:attribute type="xs:string" name="line" use="optional"/>
+                <xs:attribute type="xs:string" name="branch" use="optional"/>
+                <xs:attribute type="xs:string" name="invocation-count" use="optional"/>
+                <xs:attribute type="xs:string" name="ignored" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="statementsType">
+        <xs:sequence>
+            <xs:element type="statementType" name="statement" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="methodType">
+        <xs:sequence>
+            <xs:element type="statementsType" name="statements"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="statement-count" use="optional"/>
+        <xs:attribute type="xs:string" name="statements-invoked" use="optional"/>
+        <xs:attribute type="xs:string" name="statement-rate" use="optional"/>
+        <xs:attribute type="xs:string" name="branch-rate" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="methodsType">
+        <xs:sequence>
+            <xs:element type="methodType" name="method" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="classType">
+        <xs:sequence>
+            <xs:element type="methodsType" name="methods"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="filename" use="optional"/>
+        <xs:attribute type="xs:string" name="statement-count" use="optional"/>
+        <xs:attribute type="xs:string" name="statements-invoked" use="optional"/>
+        <xs:attribute type="xs:string" name="statement-rate" use="optional"/>
+        <xs:attribute type="xs:string" name="branch-rate" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="classesType">
+        <xs:sequence>
+            <xs:element type="classType" name="class" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="packageType">
+        <xs:sequence>
+            <xs:element type="classesType" name="classes"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="statement-count" use="optional"/>
+        <xs:attribute type="xs:string" name="statements-invoked" use="optional"/>
+        <xs:attribute type="xs:string" name="statement-rate" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="packagesType">
+        <xs:sequence>
+            <xs:element type="packageType" name="package" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="scoverageType">
+        <xs:sequence>
+            <xs:element type="packagesType" name="packages"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="statement-count"/>
+        <xs:attribute type="xs:string" name="statements-invoked"/>
+        <xs:attribute type="xs:string" name="statement-rate"/>
+        <xs:attribute type="xs:string" name="branch-rate"/>
+        <xs:attribute type="xs:string" name="version"/>
+        <xs:attribute type="xs:string" name="timestamp"/>
+    </xs:complexType>
+</xs:schema>
