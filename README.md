@@ -117,3 +117,17 @@ day: String = Thu
 ```
 
 ##### References: [https://alvinalexander.com/scala/xml-parsing-xpath-extract-xml-tag-attributes](https://alvinalexander.com/scala/xml-parsing-xpath-extract-xml-tag-attributes)
+
+### Write Parser for CodeSquad
+
+1. Generate reports in xml format.
+
+2. Genarate xsd report from xml report, add the generated xsd file into akkaModule/src/main/resources/xsdFiles/ folder
+
+3. Check report name using xml validator
+class: FileActorHelper.scala and method: getReportType
+
+4. Write two parsers for xml reports ,one for report data and one for report data detail.
+ package : akkaModule/src/main/scala/com/codesquad/reportsParsers 
+
+5. To get report parser data , create two actors inside FileProcessingActor.scala. 
